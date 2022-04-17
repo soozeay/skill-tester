@@ -3,16 +3,13 @@ up:
 build:
 	docker-compose build --no-cache --force-rm
 install:
-	cp .env.example .env
+	cp laravel/.env.example laravel/.env
 	@make build
 	@make up
 	@make composer install
 	@make yarn install
 	@make yarn run dev
 	docker-compose exec app php artisan key:generate
-	docker-compose exec app php artisan storage:link
-	docker-compose exec app php artisan adminlte:install --only=assets
-	@make migrate
 update:
 	@make composer install
 	@make yarn install
@@ -23,7 +20,7 @@ reinstall:
 work:
 	docker exec -it test-app bash
 db:
-	docker exec -it test-mysql bash	
+	docker exec -it test-mysql bash
 stop:
 	docker-compose stop
 down:
